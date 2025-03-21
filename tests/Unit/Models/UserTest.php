@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\ChatSession;
 use App\Models\User;
 
 test('to array', function () {
@@ -16,4 +17,16 @@ test('to array', function () {
             'created_at',
             'updated_at',
         ]);
+});
+
+test('user can have many chat sessions', function (): void {
+    $user = User::factory()->create();
+
+    ChatSession::factory()
+        ->count(3)
+        ->for($user)
+        ->create();
+
+    expect($user->chatSessions)->toHaveCount(3)
+        ->and($user->chatSessions->first())->toBeInstanceOf(ChatSession::class);
 });
