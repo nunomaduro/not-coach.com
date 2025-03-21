@@ -11,8 +11,6 @@ final readonly class GetLatestSessionQuery
 {
     /**
      * Get the latest chat session for the user.
-     *
-     * @return ChatSession|null The latest chat session or null if none exists
      */
     public function get(User $user): ?ChatSession
     {
