@@ -11,9 +11,9 @@ use Inertia\Testing\AssertableInertia;
 
 test('reset password screen can be rendered with token and email', function (): void {
     $user = User::factory()->create();
-    
+
     $token = Password::createToken($user);
-    
+
     $response = $this->get(route('password.reset', ['token' => $token]));
 
     $response->assertInertia(
@@ -25,11 +25,11 @@ test('reset password screen can be rendered with token and email', function (): 
 
 test('password can be reset with valid token', function (): void {
     Event::fake();
-    
+
     $user = User::factory()->create();
-    
+
     $token = Password::createToken($user);
-    
+
     $response = $this->post(route('password.store'), [
         'token' => $token,
         'email' => $user->email,
@@ -38,18 +38,18 @@ test('password can be reset with valid token', function (): void {
     ]);
 
     Event::assertDispatched(PasswordReset::class);
-    
+
     $response->assertRedirect(route('login'));
     $response->assertSessionHas('status');
-    
+
     expect(Hash::check('NewPassword123', $user->fresh()->password))->toBeTrue();
 });
 
 test('password reset fails with invalid token', function (): void {
     Event::fake();
-    
+
     $user = User::factory()->create();
-    
+
     $response = $this->post(route('password.store'), [
         'token' => 'invalid-token',
         'email' => $user->email,
@@ -58,6 +58,6 @@ test('password reset fails with invalid token', function (): void {
     ]);
 
     Event::assertNotDispatched(PasswordReset::class);
-    
+
     $response->assertSessionHasErrors('email');
 });

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\URL;
 
 test('user can verify email with valid signature', function (): void {
     Event::fake();
-    
+
     $user = User::factory()->unverified()->create();
 
     $verificationUrl = URL::temporarySignedRoute(
@@ -23,14 +23,14 @@ test('user can verify email with valid signature', function (): void {
         ->get($verificationUrl);
 
     Event::assertDispatched(Verified::class);
-    
+
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
     $response->assertRedirect(route('dashboard').'?verified=1');
 });
 
 test('already verified users are redirected without verifying again', function (): void {
     Event::fake();
-    
+
     $user = User::factory()->create();
 
     $verificationUrl = URL::temporarySignedRoute(

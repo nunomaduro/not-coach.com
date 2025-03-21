@@ -17,7 +17,7 @@ beforeEach(function (): void {
 
 test('login request validates required fields', function (): void {
     $request = new LoginRequest();
-    
+
     expect($request->rules())->toHaveKeys(['email', 'password']);
     expect($request->authorize())->toBeTrue();
 });
@@ -27,15 +27,15 @@ test('authenticate method logs in user with valid credentials', function (): voi
         'email' => 'test@example.com',
         'password' => bcrypt('password'),
     ]);
-    
+
     $request = new LoginRequest();
     $request->merge([
         'email' => 'test@example.com',
         'password' => 'password',
     ]);
-    
+
     $request->authenticate();
-    
+
     expect(Auth::check())->toBeTrue();
     expect(Auth::user()->id)->toBe($user->id);
 });
@@ -45,13 +45,13 @@ test('authenticate method throws exception with invalid credentials', function (
         'email' => 'test@example.com',
         'password' => bcrypt('password'),
     ]);
-    
+
     $request = new LoginRequest();
     $request->merge([
         'email' => 'test@example.com',
         'password' => 'wrong-password',
     ]);
-    
+
     try {
         $request->authenticate();
         $this->fail('ValidationException was not thrown');
@@ -62,21 +62,21 @@ test('authenticate method throws exception with invalid credentials', function (
 
 test('rate limiter blocks after too many attempts', function (): void {
     Event::fake();
-    
+
     $email = 'test-email';
     $ip = '127.0.0.1';
     $throttleKey = Str::transliterate(Str::lower($email).'|'.$ip);
-    
+
     // Simulate hitting rate limit
     for ($i = 0; $i < 5; $i++) {
         RateLimiter::hit($throttleKey);
     }
-    
+
     $request = new LoginRequest();
     $request->merge(['email' => $email]);
     $request->setMethod('POST');
     $request->server->set('REMOTE_ADDR', $ip);
-    
+
     try {
         $request->ensureIsNotRateLimited();
         $this->fail('ValidationException was not thrown');
@@ -91,12 +91,12 @@ test('throttle key is generated correctly', function (): void {
     $request->merge([
         'email' => 'test@example.com',
     ]);
-    
+
     $request->setMethod('POST');
     $request->server->set('REMOTE_ADDR', '127.0.0.1');
-    
+
     $key = $request->throttleKey();
-    
+
     expect($key)->toContain('test@example.com');
     expect($key)->toContain('127.0.0.1');
 });
