@@ -71,7 +71,10 @@
             "npm run test:lint"
         ],
         "test:unit": "pest --parallel --coverage --exactly=100.0",
-        "test:types": "phpstan",
+        "test:types": [
+            "phpstan",
+            "npm run test:types"
+        ],
         "test:refactor": "rector --dry-run",
         "test": [
             "@test:type-coverage",

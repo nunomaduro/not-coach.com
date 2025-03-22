@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import AppHeaderLayout from '@/layouts/app/app-header-layout';
-import { ChatMessage, ChatSession } from '@/types/chat';
+import { ChatMessage, ChatSession } from '@/types/props';
 import { useForm } from '@inertiajs/react';
 import { MessageSquare, Send } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
