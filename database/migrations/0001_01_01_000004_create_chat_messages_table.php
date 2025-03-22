@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('chat_session_id')->constrained();
             $table->string('role');
             $table->text('content');
+            $table->boolean('on_topic');
             $table->timestamps();
         });
     }

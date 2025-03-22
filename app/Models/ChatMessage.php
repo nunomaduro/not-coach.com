@@ -35,6 +35,7 @@ final class ChatMessage extends Model
             'id' => 'integer',
             'chat_session_id' => 'integer',
             'role' => ChatMessageRole::class,
+            'on_topic' => 'boolean',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

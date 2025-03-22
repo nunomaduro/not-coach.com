@@ -24,16 +24,28 @@ final readonly class CreateChatMessageAction
     public function handle(ChatSession $chatSession, string $content): void
     {
         DB::transaction(function () use ($chatSession, $content): void {
-            $chatSession->messages()->create([
+            $message = $chatSession->messages()->create([
                 'role' => ChatMessageRole::User,
                 'content' => $content,
+                'on_topic' => $this->ai->isOnTopic($content),
             ]);
+
+            if ($message->on_topic === false) {
+                $chatSession->messages()->create([
+                    'role' => ChatMessageRole::Assistant,
+                    'content' => 'This is not the place to discuss this.',
+                    'on_topic' => false,
+                ]);
+
+                return;
+            }
 
             $response = $this->generateAIResponse($chatSession);
 
             $chatSession->messages()->create([
                 'role' => ChatMessageRole::Assistant,
                 'content' => $response,
+                'on_topic' => true,
             ]);
         });
     }
@@ -45,6 +57,7 @@ final readonly class CreateChatMessageAction
     {
         /** @var array<int, array{role: string, content: string}> $messages */
         $messages = $chatSession->messages()
+            ->where('on_topic', true)
             ->orderBy('created_at')
             ->get()
             ->map(fn (ChatMessage $message): array => [
