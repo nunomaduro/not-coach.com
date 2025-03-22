@@ -6,7 +6,7 @@ import AppHeaderLayout from '@/layouts/app/app-header-layout';
 import { ChatMessage, ChatSession } from '@/types/props';
 import { useForm } from '@inertiajs/react';
 import { MessageSquare, Send } from 'lucide-react';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 
 interface ChatPageProps {
     session: ChatSession;
@@ -14,8 +14,7 @@ interface ChatPageProps {
 
 export default function List({ session }: ChatPageProps) {
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const { data, setData, post, processing, reset } = useForm({
+    const form = useForm({
         content: '',
     });
 
@@ -30,20 +29,14 @@ export default function List({ session }: ChatPageProps) {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        if (!data.content.trim() || processing || isSubmitting) {
+        if (!form.data.content.trim() || form.processing) {
             return;
         }
 
-        setIsSubmitting(true);
-
-        post(route('chat.messages.store'), {
+        form.post(route('chat.messages.store'), {
             preserveScroll: true,
             onSuccess: () => {
-                reset('content');
-                setIsSubmitting(false);
-            },
-            onError: () => {
-                setIsSubmitting(false);
+                form.reset('content');
             },
         });
     };
@@ -94,20 +87,21 @@ export default function List({ session }: ChatPageProps) {
                                 <Input
                                     type="text"
                                     placeholder="Type your message..."
-                                    value={data.content}
-                                    onChange={(e) => setData('content', e.target.value)}
-                                    disabled={processing || isSubmitting}
+                                    value={form.data.content}
+                                    onChange={(e) => form.setData('content', e.target.value)}
+                                    disabled={form.processing}
                                     className="flex-1"
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' && !e.shiftKey) {
                                             e.preventDefault();
-                                            if (data.content.trim() && !processing && !isSubmitting) {
+
+                                            if (form.data.content.trim() && !form.processing) {
                                                 handleSubmit(e);
                                             }
                                         }
                                     }}
                                 />
-                                <Button type="submit" disabled={processing || isSubmitting || !data.content.trim()}>
+                                <Button type="submit" disabled={form.processing || !form.data.content.trim()}>
                                     <Send className="size-4" />
                                     <span className="sr-only">Send</span>
                                 </Button>
