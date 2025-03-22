@@ -13,6 +13,11 @@ test('store creates new chat message', function () {
     $chatSession = ChatSession::factory()->for($user)->create();
 
     app(AI::class)
+        ->shouldReceive('isOnTopic')
+        ->once()
+        ->andReturn(true);
+
+    app(AI::class)
         ->shouldReceive('chat')
         ->once();
 

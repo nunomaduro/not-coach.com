@@ -25,6 +25,7 @@ final class ChatMessageFactory extends Factory
             'chat_session_id' => ChatSession::factory(),
             'role' => fake()->randomElement([ChatMessageRole::User, ChatMessageRole::Assistant]),
             'content' => fake()->paragraph(),
+            'on_topic' => true,
             'created_at' => fake()->dateTimeBetween('-1 month', 'now'),
             'updated_at' => fn (array $attributes) => $attributes['created_at'],
         ];

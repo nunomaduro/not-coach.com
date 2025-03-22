@@ -15,6 +15,7 @@ test('to array', function () {
             'chat_session_id',
             'role',
             'content',
+            'on_topic',
             'created_at',
             'updated_at',
         ]);
