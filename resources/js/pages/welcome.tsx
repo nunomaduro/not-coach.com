@@ -23,7 +23,7 @@ export default function Welcome() {
                                     href={route('dashboard')}
                                     className="hover:bg-opacity-90 rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition-all"
                                 >
-                                    Dashboard
+                                    Chat
                                 </Link>
                             ) : (
                                 <>
