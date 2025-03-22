@@ -35,7 +35,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/chat" prefetch>
+                            <Link href={route('chat.index')} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
