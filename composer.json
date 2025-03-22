@@ -10,9 +10,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "guzzlehttp/guzzle": "^7.9.2",
         "inertiajs/inertia-laravel": "^2.0.1",
         "laravel/framework": "^12.3",
         "laravel/tinker": "^2.10.1",
+        "openai-php/client": "^0.10.3",
         "tightenco/ziggy": "^2.5.2"
     },
     "require-dev": {

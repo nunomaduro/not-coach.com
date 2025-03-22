@@ -12,7 +12,7 @@ interface ChatPageProps {
     session: ChatSession;
 }
 
-export default function Chat({ session }: ChatPageProps) {
+export default function List({ session }: ChatPageProps) {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { data, setData, post, processing, reset } = useForm({

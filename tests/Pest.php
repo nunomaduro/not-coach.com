@@ -13,6 +13,7 @@ declare(strict_types=1);
 |
 */
 
+use App\Contracts\Services\AI;
 use Illuminate\Support\Sleep;
 
 pest()->extend(Tests\TestCase::class)
@@ -22,8 +23,9 @@ pest()->extend(Tests\TestCase::class)
         Str::createUuidsNormally();
         Http::preventStrayRequests();
         Sleep::fake();
-
         $this->freezeTime();
+
+        $this->swap(AI::class, Mockery::mock(AI::class));
     })
     ->in('Feature', 'Unit');
 

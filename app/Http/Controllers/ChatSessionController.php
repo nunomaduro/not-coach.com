@@ -28,7 +28,7 @@ final class ChatSessionController
 
         $session = $query->get($user);
 
-        return Inertia::render('chat/index', [
+        return Inertia::render('chat/list', [
             'session' => $session,
         ]);
     }

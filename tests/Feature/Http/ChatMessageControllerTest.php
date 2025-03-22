@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Contracts\Services\AI;
 use App\Enums\ChatMessageRole;
 use App\Models\ChatMessage;
 use App\Models\ChatSession;
@@ -10,6 +11,10 @@ use App\Models\User;
 test('store creates new chat message', function () {
     $user = User::factory()->create();
     $chatSession = ChatSession::factory()->for($user)->create();
+
+    app(AI::class)
+        ->shouldReceive('chat')
+        ->once();
 
     $this->actingAs($user)
         ->fromRoute('chat.index')

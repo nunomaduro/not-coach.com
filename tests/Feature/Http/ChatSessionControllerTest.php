@@ -15,7 +15,7 @@ test('index creates chat session if none exists', function () {
     $this->actingAs($user)
         ->get(route('chat.index'))
         ->assertInertia(fn (AssertableInertia $page) => $page
-            ->component('chat/index')
+            ->component('chat/list')
             ->has('session')
         );
 
@@ -36,7 +36,7 @@ test('index re-uses existing session if exists', function () {
     $this->actingAs($user)
         ->get(route('chat.index'))
         ->assertInertia(fn (AssertableInertia $page) => $page
-            ->component('chat/index')
+            ->component('chat/list')
             ->has('session')
             ->where('session.id', $chatSession->id)
         );
