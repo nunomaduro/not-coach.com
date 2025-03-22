@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use DateTimeInterface;
