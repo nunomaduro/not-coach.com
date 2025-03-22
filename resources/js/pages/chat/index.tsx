@@ -30,13 +30,13 @@ export default function Chat({ session }: ChatPageProps) {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        
+
         if (!data.content.trim() || processing || isSubmitting) {
             return;
         }
 
         setIsSubmitting(true);
-        
+
         post(route('chat.messages.store'), {
             preserveScroll: true,
             onSuccess: () => {
@@ -45,7 +45,7 @@ export default function Chat({ session }: ChatPageProps) {
             },
             onError: () => {
                 setIsSubmitting(false);
-            }
+            },
         });
     };
 
@@ -55,31 +55,28 @@ export default function Chat({ session }: ChatPageProps) {
                 <Card className="mx-auto max-w-4xl shadow-sm">
                     <CardHeader className="pb-3">
                         <div className="flex items-center gap-2">
-                            <MessageSquare className="h-5 w-5 text-primary" />
+                            <MessageSquare className="text-primary h-5 w-5" />
                             <CardTitle>Chat Assistant</CardTitle>
                         </div>
                         <Separator className="mt-2" />
                     </CardHeader>
                     <CardContent className="px-4 pt-0 pb-2">
-                        <div className="space-y-6 max-h-[60vh] overflow-y-auto p-2">
+                        <div className="max-h-[60vh] space-y-6 overflow-y-auto p-2">
                             {session.messages.length === 0 ? (
-                                <div className="flex items-center justify-center h-32 text-muted-foreground">
+                                <div className="text-muted-foreground flex h-32 items-center justify-center">
                                     <p>No messages yet. Start a conversation!</p>
                                 </div>
                             ) : (
                                 session.messages.map((message: ChatMessage) => {
                                     // Skip system messages
                                     if (message.role === 'system') return null;
-                                    
+
                                     return (
-                                        <div 
-                                            key={message.id} 
-                                            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                                        >
-                                            <div 
+                                        <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                            <div
                                                 className={`max-w-[80%] rounded-lg p-3 shadow-sm ${
-                                                    message.role === 'user' 
-                                                        ? 'bg-primary text-primary-foreground' 
+                                                    message.role === 'user'
+                                                        ? 'bg-primary text-primary-foreground'
                                                         : 'bg-secondary text-secondary-foreground'
                                                 }`}
                                             >
@@ -94,7 +91,7 @@ export default function Chat({ session }: ChatPageProps) {
                     </CardContent>
                     <CardFooter className="border-t pt-4">
                         <form onSubmit={handleSubmit} className="w-full">
-                            <div className="flex gap-2 w-full">
+                            <div className="flex w-full gap-2">
                                 <Input
                                     type="text"
                                     placeholder="Type your message..."
@@ -111,10 +108,7 @@ export default function Chat({ session }: ChatPageProps) {
                                         }
                                     }}
                                 />
-                                <Button 
-                                    type="submit" 
-                                    disabled={processing || isSubmitting || !data.content.trim()}
-                                >
+                                <Button type="submit" disabled={processing || isSubmitting || !data.content.trim()}>
                                     <Send className="size-4" />
                                     <span className="sr-only">Send</span>
                                 </Button>

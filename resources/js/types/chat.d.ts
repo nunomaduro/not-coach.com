@@ -1,5 +1,3 @@
-import { User } from '.';
-
 export interface ChatSession {
     id: number;
     user_id: number;
