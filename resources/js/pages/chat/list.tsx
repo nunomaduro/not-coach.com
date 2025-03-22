@@ -19,7 +19,6 @@ export default function List({ session }: ChatPageProps) {
         content: '',
     });
 
-    // Scroll to bottom when component mounts or messages change
     useEffect(() => {
         scrollToBottom();
     }, [session.messages]);
