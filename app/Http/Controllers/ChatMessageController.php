@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Chat;
+namespace App\Http\Controllers;
 
 use App\Actions\CreateChatMessageAction;
-use App\Http\Requests\Chat\CreateChatMessageRequest;
+use App\Http\Requests\CreateChatMessageRequest;
 use App\Queries\GetLatestSessionQuery;
 use Illuminate\Http\RedirectResponse;
 
@@ -19,9 +19,12 @@ final class ChatMessageController
         GetLatestSessionQuery $query,
         CreateChatMessageAction $action
     ): RedirectResponse {
-        $chatSession = $query->get($request->user());
+        /** @var \App\Models\User $user */
+        $user = $request->user();
 
-        $action->handle($chatSession, $request->validated('content'));
+        $chatSession = $query->get($user);
+
+        $action->handle($chatSession, $request->string('content')->value());
 
         return back();
     }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Chat;
+namespace App\Http\Controllers;
 
 use App\Actions\CreateChatSessionAction;
-use App\Http\Requests\Chat\CreateChatSessionRequest;
+use App\Http\Requests\CreateChatSessionRequest;
 use App\Queries\GetLatestSessionQuery;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

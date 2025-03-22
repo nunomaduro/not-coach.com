@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read CarbonImmutable $created_at
  * @property-read CarbonImmutable $updated_at
  */
+
 final class ChatSession extends Model
 {
     /** @use HasFactory<ChatSessionFactory> */

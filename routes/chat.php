@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Chat\ChatMessageController;
-use App\Http\Controllers\Chat\ChatSessionController;
+use App\Http\Controllers\ChatMessageController;
+use App\Http\Controllers\ChatSessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('chat')->middleware(['auth', 'verified'])->group(function (): void {

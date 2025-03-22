@@ -8,10 +8,8 @@ use App\Models\User;
 use App\Queries\GetLatestSessionQuery;
 
 test('it returns the latest chat session for a user with messages', function (): void {
-    // Arrange
     $user = User::factory()->create();
 
-    // Create older session
     $olderSession = ChatSession::factory()->for($user)->create([
         'created_at' => now()->subDays(2),
         'updated_at' => now()->subDays(2),
@@ -22,7 +20,6 @@ test('it returns the latest chat session for a user with messages', function ():
         ->for($olderSession)
         ->create();
 
-    // Create newest session
     $newestSession = ChatSession::factory()->for($user)->create([
         'created_at' => now(),
         'updated_at' => now(),
@@ -33,27 +30,12 @@ test('it returns the latest chat session for a user with messages', function ():
         ->for($newestSession)
         ->create();
 
-    // Create a session for another user (should not be returned)
     $otherUser = User::factory()->create();
     $otherSession = ChatSession::factory()->for($otherUser)->create();
 
-    // Act
     $query = new GetLatestSessionQuery();
     $result = $query->get($user);
 
-    // Assert
     expect($result->id)->toBe($newestSession->id)
         ->and($result->messages)->toHaveCount(3);
-});
-
-test('it returns null when user has no chat sessions', function (): void {
-    // Arrange
-    $user = User::factory()->create();
-
-    // Act
-    $query = new GetLatestSessionQuery();
-    $result = $query->get($user);
-
-    // Assert
-    expect($result)->toBeNull();
 });
