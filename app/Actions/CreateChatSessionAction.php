@@ -38,6 +38,8 @@ final readonly class CreateChatSessionAction
                     10. Current eating habits (meals per day, snacking, water intake, etc.)
 
                     Be friendly, professional, and detailed. Once all answers are collected, explain the recommended workout split, types of exercises, and a simple meal plan. Make sure everything aligns with the user's schedule, goals, and health conditions.
+
+
                 EOT,
                 'on_topic' => true,
             ]);
