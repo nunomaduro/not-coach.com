@@ -6,7 +6,7 @@ use App\Http\Controllers\Chat\ChatMessageController;
 use App\Http\Controllers\Chat\ChatSessionController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])->group(function (): void {
+Route::prefix('chat')->middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/', [ChatSessionController::class, 'index'])->name('chat.index');
     Route::post('/', [ChatSessionController::class, 'store'])->name('chat.store');
 

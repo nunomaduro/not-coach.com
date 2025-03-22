@@ -12,7 +12,7 @@ final readonly class GetLatestSessionQuery
     /**
      * Get the latest chat session for the user.
      */
-    public function get(User $user): ?ChatSession
+    public function get(User $user): ChatSession
     {
         return ChatSession::query()
             ->where('user_id', $user->id)
